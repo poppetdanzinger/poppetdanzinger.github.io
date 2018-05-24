@@ -78,12 +78,4 @@ function getNewEventElement(query){
 
 $(document).ready(function(){
 	refreshEventList();
-    
-	$('ul.thumbnail li').hover(function() {
-		$(this).find('span').fadeToggle('fast');
-	});
-	
-	$('.newsletter-button').hover(function() {
-		$(this).fadeToggle('fast');
-	});
 });
