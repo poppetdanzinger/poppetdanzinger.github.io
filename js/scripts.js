@@ -5,23 +5,30 @@ var urlPattern=/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([
 function refreshEventList(){
 	console.log("Refreshing event list.");
 	
-	var url="https://www.googleapis.com/calendar/v3/calendars/shyshyschullie@gmail.com/events";
-	url+="?key=AIzaSyCDyJdWjIEO_PIxuEC7zdz64sg69hFHfzs&timeMin=";
-	url+=moment().subtract(24,"hours").format("YYYY-MM-DDTHH:mm:ss")+"Z";
+	var url="http://stuartspence.ca/api/google_calendar_proxy?calendar_id=shyshyschullie@gmail.com";
 	
-	$.get(url,
-	      function(data){
-		console.log("Successfully retrieved Calendar API data.")
-		data.items.sort(function(a,b){
-			var aDate="dateTime" in a.start?a.start.dateTime:a.start.date;
-			var bDate="dateTime" in b.start?b.start.dateTime:b.start.date;
-			return aDate>bDate;
-		});
-		for (var index=0;index<data.items.length;index++){
-			var event=data.items[index];
-			processEventData(event);
+	$.ajax({
+		url: url,
+		headers: {"Access-Control-Allow-Origin":"*"},
+		type: "GET",
+		success:function(data){
+			console.log("Successfully retrieved Calendar API data.");
+			handleCalendarData(data);
 		}		
-	      })
+		})
+}
+
+function handleCalendarData(data){
+	console.log("Successfully retrieved Calendar API data.");
+	data.items.sort(function(a,b){
+		var aDate="dateTime" in a.start?a.start.dateTime:a.start.date;
+		var bDate="dateTime" in b.start?b.start.dateTime:b.start.date;
+		return aDate>bDate;
+	});
+	for (var index=0;index<data.items.length;index++){
+		var event=data.items[index];
+		processEventData(event);
+	}	
 }
 
 function processEventData(event){
