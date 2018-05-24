@@ -338,11 +338,17 @@ a.presave:hover {
     border: 1px solid rgba(0,0,0,.2);
 	color: #fff;
 	text-decoration: none;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 .newsletter-button:hover {
 	background: rgba(255,255,255,0.7);
+}
+
+.newsletter-button-container{
+	margin-left: auto;
+    margin-right: auto;
+    width: 277px;
 }
 
 ul.social {
